@@ -16,12 +16,6 @@ namespace webapi.Controllers
     {
         private Entities2 db = new Entities2();
 
-        // GET: api/videos
-        public IQueryable<video> Getvideo()
-        {
-            return db.video;
-        }
-
         // GET: api/videos/5
         [ResponseType(typeof(video))]
         public IHttpActionResult Getvideo(int id)

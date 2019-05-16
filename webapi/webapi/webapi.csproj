@@ -183,7 +183,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\itemsController.cs" />
     <Compile Include="Controllers\usersController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\videosController.cs" />
     <Compile Include="Controllers\votesController.cs" />
     <Compile Include="Global.asax.cs">

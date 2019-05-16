@@ -16,12 +16,6 @@ namespace webapi.Controllers
     {
         private Entities2 db = new Entities2();
 
-        // GET: api/average
-        public IQueryable<avg> Getavg()
-        {
-            return db.avg;
-        }
-
         // GET: api/average/5
         [ResponseType(typeof(avg))]
         public IHttpActionResult Getavg(int id)
@@ -31,87 +25,6 @@ namespace webapi.Controllers
             {
                 return NotFound();
             }
-
-            return Ok(avg);
-        }
-
-        // PUT: api/average/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult Putavg(int id, avg avg)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != avg.id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(avg).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!avgExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/average
-        [ResponseType(typeof(avg))]
-        public IHttpActionResult Postavg(avg avg)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.avg.Add(avg);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (avgExists(avg.id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = avg.id }, avg);
-        }
-
-        // DELETE: api/average/5
-        [ResponseType(typeof(avg))]
-        public IHttpActionResult Deleteavg(int id)
-        {
-            avg avg = db.avg.Find(id);
-            if (avg == null)
-            {
-                return NotFound();
-            }
-
-            db.avg.Remove(avg);
-            db.SaveChanges();
 
             return Ok(avg);
         }

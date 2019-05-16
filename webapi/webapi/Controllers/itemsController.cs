@@ -16,12 +16,6 @@ namespace webapi.Controllers
     {
         private Entities2 db = new Entities2();
 
-        // GET: api/items
-        public IQueryable<item> Getitem()
-        {
-            return db.item;
-        }
-
         // GET: api/items/5
         [ResponseType(typeof(item))]
         public IHttpActionResult Getitem(int id)
@@ -35,40 +29,6 @@ namespace webapi.Controllers
             return Ok(item);
         }
 
-        // PUT: api/items/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult Putitem(int id, item item)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != item.user_id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(item).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!itemExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
 
         // POST: api/items
         [ResponseType(typeof(item))]

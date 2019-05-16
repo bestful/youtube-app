@@ -16,25 +16,6 @@ namespace webapi.Controllers
     {
         private Entities2 db = new Entities2();
 
-        // GET: api/votes
-        public IQueryable<vote> Getvote()
-        {
-            return db.vote;
-        }
-
-        // GET: api/votes/5
-        [ResponseType(typeof(vote))]
-        public IHttpActionResult Getvote(int id)
-        {
-            vote vote = db.vote.Find(id);
-            if (vote == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(vote);
-        }
-
         // PUT: api/votes/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Putvote(int id, vote vote)
@@ -68,36 +49,6 @@ namespace webapi.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/votes
-        [ResponseType(typeof(vote))]
-        public IHttpActionResult Postvote(vote vote)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.vote.Add(vote);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (voteExists(vote.video_id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = vote.video_id }, vote);
         }
 
         // DELETE: api/votes/5

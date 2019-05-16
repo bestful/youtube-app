@@ -22,19 +22,6 @@ namespace webapi.Controllers
             return db.user;
         }
 
-        // GET: api/users/5
-        [ResponseType(typeof(user))]
-        public IHttpActionResult Getuser(int id)
-        {
-            user user = db.user.Find(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(user);
-        }
-
         // PUT: api/users/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Putuser(int id, user user)
@@ -68,37 +55,6 @@ namespace webapi.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/users
-        [ResponseType(typeof(user))]
-        public IHttpActionResult Postuser(user user)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.user.Add(user);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = user.id }, user);
-        }
-
-        // DELETE: api/users/5
-        [ResponseType(typeof(user))]
-        public IHttpActionResult Deleteuser(int id)
-        {
-            user user = db.user.Find(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            db.user.Remove(user);
-            db.SaveChanges();
-
-            return Ok(user);
         }
 
         protected override void Dispose(bool disposing)
