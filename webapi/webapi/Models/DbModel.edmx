@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Model" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="counter">
+          <Key>
+            <PropertyRef Name="type" />
+            <PropertyRef Name="fun" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="type" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="fun" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="value" Type="int" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="45" />
+          <Property Name="password" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="video">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="link" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "def.youtube-app.avg" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="avg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="avg" Type="decimal" Precision="14" Scale="4" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "def.youtube-app.item" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="video_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="video_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "def.youtube-app.vote" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="vote">
+          <Key>
+            <PropertyRef Name="video_id" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="video_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="mark" Type="int" />
+        </EntityType>
+        <EntityContainer Name="Хранилище ModelContainer">
+          <EntitySet Name="counter" EntityType="Self.counter" Schema="youtube-app" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="youtube-app" store:Type="Tables" />
+          <EntitySet Name="video" EntityType="Self.video" Schema="youtube-app" store:Type="Tables" />
+          <EntitySet Name="avg" EntityType="Self.avg" store:Type="Views" store:Schema="youtube-app">
+            <DefiningQuery>SELECT
+`avg`.`id`, 
+`avg`.`avg`
+FROM `avg` AS `avg`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="item" EntityType="Self.item" store:Type="Views" store:Schema="youtube-app">
+            <DefiningQuery>SELECT
+`item`.`user_id`, 
+`item`.`video_id`
+FROM `item` AS `item`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vote" EntityType="Self.vote" store:Type="Views" store:Schema="youtube-app">
+            <DefiningQuery>SELECT
+`vote`.`video_id`, 
+`vote`.`user_id`, 
+`vote`.`mark`
+FROM `vote` AS `vote`</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="counter">
+          <Key>
+            <PropertyRef Name="type" />
+            <PropertyRef Name="fun" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="type" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fun" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="value" Type="Int32" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="video">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="link" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="avg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="avg1" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="video_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="video_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vote">
+          <Key>
+            <PropertyRef Name="video_id" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="video_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="mark" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="Entities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="counter" EntityType="Self.counter" />
+          <EntitySet Name="user" EntityType="Self.user" />
+          <EntitySet Name="video" EntityType="Self.video" />
+          <EntitySet Name="avg" EntityType="Self.avg" />
+          <EntitySet Name="item" EntityType="Self.item" />
+          <EntitySet Name="vote" EntityType="Self.vote" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="Entities2">
+          <EntitySetMapping Name="counter">
+            <EntityTypeMapping TypeName="Model.counter">
+              <MappingFragment StoreEntitySet="counter">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="fun" ColumnName="fun" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="Model.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="video">
+            <EntityTypeMapping TypeName="Model.video">
+              <MappingFragment StoreEntitySet="video">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="avg">
+            <EntityTypeMapping TypeName="Model.avg">
+              <MappingFragment StoreEntitySet="avg">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="avg1" ColumnName="avg" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="item">
+            <EntityTypeMapping TypeName="Model.item">
+              <MappingFragment StoreEntitySet="item">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="video_id" ColumnName="video_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vote">
+            <EntityTypeMapping TypeName="Model.vote">
+              <MappingFragment StoreEntitySet="vote">
+                <ScalarProperty Name="video_id" ColumnName="video_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="mark" ColumnName="mark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
