@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Results;
 using System.Web.Http.Description;
 using webapi.Models;
 
@@ -20,6 +22,24 @@ namespace webapi.Controllers
         public IQueryable<user> Getuser()
         {
             return db.user;
+        }
+
+        [ResponseType(typeof(void))]
+        [HttpPost]
+        [Route("login")]
+        public IHttpActionResult Loginuser(user user)
+        {
+            user correctUser;
+            try {
+                correctUser = db.user.Find(new { username = user.username });
+                return Ok(new { loggedIn = true});
+            }
+            catch (NullReferenceException)
+            {
+                return Ok(new { loggedIn = false });
+            }
+            
+
         }
 
         // PUT: api/users/5
