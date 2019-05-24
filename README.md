@@ -1,0 +1,3 @@
+## Architecture
+
+![](flow-diagram.svg)
