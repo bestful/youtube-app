@@ -20,13 +20,10 @@ namespace webapi.Controllers
         [ResponseType(typeof(item))]
         public IHttpActionResult Getitem(int id)
         {
-            item item = db.item.Find(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
+            var set = db.item.
+                    Where(item => item.user_id == id);
 
-            return Ok(item);
+            return Ok(set);
         }
 
 
