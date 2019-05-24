@@ -1,7 +1,7 @@
 <!-- Navigantion -->
-<div class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <a class="navbar-brand" [routerLink]="['/welcome']" href="/welcome">Youtube app</a>
-  <ul class="navbar-nav">
+<div class="navbar navbar-expand-sm bg-dark navbar-dark d-flex">
+  <a class="navbar-brand justify-content-start ml-auto" [routerLink]="['/welcome']" href="/welcome">Youtube app</a>
+  <ul class="navbar-nav col-8 col-lg-6 col-xl-4 justify-content-end mr-auto">
     <!-- Recursion hack because bootstrap selector uses .nav > li {} -->
       <!-- If guest -->
     <ul class="navbar-nav">
@@ -15,4 +15,4 @@
     </ul>
   </ul>
 </div>  
-<router-outlet></router-outlet>
+<router-outlet></router-outlet> 

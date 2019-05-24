@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule } from '@angular/forms';
 
 import {LoginComponent} from './auth/login/login.component';
 import {RegisterComponent} from './auth/register/register.component';
@@ -13,6 +14,7 @@ import {AppComponent} from './app.component'
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import { ApiService } from './service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,12 +22,13 @@ import { ApiService } from './service';
     RegisterComponent,
     CredentionalComponent,
     FavorComponent,
-    WelcomeComponent, 
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [HttpClient, ApiService],
   bootstrap: [AppComponent]

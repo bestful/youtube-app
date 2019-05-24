@@ -1,0 +1,8 @@
+.navbar {
+  /* box-shadow: 0 10px 70px rgba(167, 159, 159, 0.9); */
+  box-shadow: 0 10px 70px rgba(176, 240, 174, 0.9);
+  margin-bottom: 19px;
+  z-index: 0;
+  border-radius: 0 40px 0 40px;
+}
+
