@@ -1,0 +1,116 @@
+
+// Classes for font-size
+$font-sizes: 13px, 14px, 15px, 16px, 18px, 20px, 24px, 30px, 48px, 72px;
+$colors: (
+  blue: #3498db,
+  cyan: #1abc9c,
+  green: #82a536,
+  white: #ffffff,
+  black: #000000,
+  darkblue: #34495e,
+  indigo: #2D3E50,
+  lightblue: #aeecfc,
+  dark: #37353a,
+  grey-e: #eee,
+  grey-c: #ccc,
+  red: #f65959,
+  purple: #65517c
+);
+
+$breakpoints: (
+  "phone": 400px,
+  "phone-wide": 480px,
+  "phablet": 560px,
+  "tablet-small": 640px,
+  "tablet": 768px,
+  "tablet-wide": 1024px,
+  "desktop": 1248px,
+  "desktop-wide": 1440px
+);
+
+$container-max-width: map-get($breakpoints, "tablet-wide");
+$grid-cw2 : $container-max-width/2;
+$grid-s : minmax(auto, $grid-cw2);
+
+// Functions
+@function strip-unit($number) {
+  @if type-of($number) == "number" and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+@mixin mq($width, $type: min) {
+  @if map_has_key($breakpoints, $width) {
+    $width: map_get($breakpoints, $width);
+    // @if $type == max {
+    //   $width: $width - 1px;
+    // }
+    @media only screen and (#{$type}-width: $width) {
+      @content;
+    }
+  }
+}
+
+@function contains($list, $var) {
+  @return (null == index($list, $var));
+} 
+
+
+@mixin txt($col: map-get($colors, darkblue), $font-size: 18px, $line-height: 30px){
+  font-family: "Open Sans";
+  font-weight: 300;
+  color: map-get($colors, $col);
+  font-size: $font-size;
+  line-height: $line-height;
+  @content;
+}
+
+@mixin txt-center($col: map-get($colors, darkblue), $font-size: 18px, $line-height: 30px){
+  @include txt($col, $font-size, $line-height);
+  text-align: center;
+  @content
+}
+
+.block-image { grid-area: block-image; }
+.block-title { grid-area: block-title; }
+.block-content { grid-area: block-content; }
+.block-buttons { grid-area: block-buttons; }
+
+@mixin grid($areas, $columns, $rows){
+  display: grid;
+  grid-template-columns: $columns;
+  grid-template-rows: $rows;
+  grid-template-areas: $areas;
+  @content;
+}
+
+@mixin flex($justify: space-between, $wrap: nowrap, $align: flex-start){
+  display: flex;
+  justify-content: $justify;
+  flex-wrap: $wrap;
+  align-items: $align;
+  @content;
+}
+
+@mixin bg-image($image, $size, $repeat: no-repeat){
+  background-image: $image;
+  background-repeat: $repeat;
+  background-size: $size;
+  @content;
+}
+
+@mixin bg-color($col){
+  @if map_has_key($colors, $col){
+    background-color: map-get($colors, $col);
+  }
+  @else{
+    background-color: $col;
+  }
+} 
+
+@mixin padding-tb($top: 100px, $bottom: 100px){
+  padding-top: $top;
+  padding-bottom: $bottom;
+}

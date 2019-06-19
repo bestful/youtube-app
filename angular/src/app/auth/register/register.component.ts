@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/app/model';
 import { NgForm, NgModel } from '@angular/forms';
-import {AuthService} from '../auth.service'
+import { AuthService} from '../auth.service'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -9,17 +10,18 @@ import {AuthService} from '../auth.service'
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  @Input()
   user: User;
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.user = new User();
   }
 
   onRegister(){
-    this.auth.register(User);
+    this.auth.register(this.user);
+    console.log(this.user.username, this.user.password);
+    this.toastr.success("User registered");
   }
 
 }

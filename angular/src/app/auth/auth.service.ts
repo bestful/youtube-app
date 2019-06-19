@@ -12,17 +12,16 @@ export class AuthService {
   user: User;
 
   root = 'http://localhost:59003/api/user/';
-  
-  constructor(private http: HttpClient) { 
-    this.http = http;
+
+  constructor(private api: ApiService) {
    }
 
-   login(u: User){
-    
+   login(u: User) {
+
    }
 
-   register(u: User){
-    this.http.post(this.root, u);
+   register(user: User) {
+    this.api.post('users', user);
    }
 
 

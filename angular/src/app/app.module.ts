@@ -1,18 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
 
 import {LoginComponent} from './auth/login/login.component';
 import {RegisterComponent} from './auth/register/register.component';
+
+// Components
 import {CredentionalComponent} from './account/credentional/credentional.component';
 import {FavorComponent} from './account/favor/favor.component';
 import {WelcomeComponent} from './welcome/welcome.component';
-import {AppComponent} from './app.component'
+import {AppComponent} from './app.component';
 
+// Angular modules
 import {HttpClientModule, HttpClient} from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+
+
+// 3d-party modules and services
+import {ToastrModule} from 'ngx-toastr';
 import { ApiService } from './service';
+import {ToastrService} from 'ngx-toastr';
+
 
 
 @NgModule({
@@ -26,11 +35,13 @@ import { ApiService } from './service';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    ToastrModule.forRoot(),
   ],
-  providers: [HttpClient, ApiService],
+  providers: [HttpClient, ApiService, ToastrService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

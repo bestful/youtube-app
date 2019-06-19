@@ -1,6 +1,7 @@
-
-<form method="get" action="" class="form-group">
-  <div class="form-group"><label for="">Username</label><input type="text" name="username" class="form-control"></div>
-  <div class="form-group"><label for="">Password</label><input type="password" name="password" class="form-control"></div>
-  <button class="btn btn-success" type="button">Login</button>
-</form>
+<section class="login">
+  <div class="form-green">
+    <div class="form-group"><label for="">Username</label><input [(ngModel)]="user.username" type="text" class="form-control"></div>
+    <div class="form-group"><label for="">Password</label><input [(ngModel)]="user.password"  type="password" class="form-control"></div>
+    <button class="btn btn-success" type="button" (click)="onRegister();">Login</button>
+  </div>
+</section>

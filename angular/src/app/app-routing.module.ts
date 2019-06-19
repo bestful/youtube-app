@@ -10,7 +10,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'welcome' },
-  { path: 'welcome', component: WelcomeComponent },
+  { path: 'welcome', component: WelcomeComponent,  data: { title: 'My Calendar' }},
   // Authorization
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

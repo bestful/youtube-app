@@ -9,7 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-favor',
   templateUrl: './favor.component.html',
-  styleUrls: ['./favor.component.css']
+  styleUrls: ['./favor.component.scss']
 })
 export class FavorComponent implements OnInit {
 
@@ -28,10 +28,10 @@ export class FavorComponent implements OnInit {
   getFavors() {
     let uid = 1;
     // Select list of videos ids
-    this.api.get('items', uid, {}).toPromise().then(res_ => {
+    this.api.get('items', uid, {}).then(res_ => {
       let res = res_ as any;
       for(let item of res){
-      this.api.get('videos', item.video_id).toPromise().then(
+      this.api.get('videos', item.video_id).then(
         video_ => {  
           let video = video_ as any as Video; 
           // Update items
