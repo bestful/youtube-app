@@ -7,7 +7,7 @@ Foreach-Object {
     '-name ' + $_.BaseName + 'Controller ' +
     '-api ' + 
     '-m webapi_core2.Models.' + $_.BaseName + ' ' +
-    '-dc myConnection ' +
+    '-dc youtubeappContext ' +
     '-outDir Controllers ' +
     '-namespace webapi_core2.Controllers -f'
 
