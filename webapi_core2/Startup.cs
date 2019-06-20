@@ -33,10 +33,9 @@ namespace webapi_core2
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
       // Inject an implementation of ISwaggerProvider with defaulted settings applied
-      services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
-});
+      services.AddSwaggerGen(c => {
+        c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+      });
 
       // services.AddDbContext<myConnection>(options =>
       // options.UseSqlServer(Configuration.GetConnectionString("myConnection")));
