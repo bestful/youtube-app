@@ -11,7 +11,7 @@ export class AuthService {
   hashkey: string;
   user: User;
 
-  root = 'http://localhost:44347/api/user/';
+  root = 'http://localhost:59003/api/user/';
 
   constructor(private api: ApiService) {
    }

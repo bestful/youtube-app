@@ -1,0 +1,21 @@
+<!-- Navigantion -->
+<div class="navbar navbar-expand-sm bg-dark navbar-dark d-flex">
+  <a class="navbar-brand justify-content-start ml-auto" [routerLink]="['/welcome']" (click)="title = 'Home'">Youtube app</a>
+  <ul class="navbar-nav col-8 col-lg-6 col-xl-4 justify-content-end mr-auto">
+    <!-- Navbar navigation -->
+    <!-- If guest -->
+    <li class="nav-item" *ngFor="let menu of menus">
+        <a *ngIf="!menu.auth" class="nav-link" [routerLink]="menu.routerLink" (click)="title = menu.label">{{menu.label}}</a>
+    </li>
+    <!-- If authorized -->
+    <li class="nav-item" *ngFor="let menu of menus">
+        <a *ngIf="menu.auth" class="nav-link" [routerLink]="menu.routerLink" (click)="title = menu.label">{{menu.label}}</a>
+    </li>
+  </ul>
+  <div class="navbar-after" *ngIf="title">
+    {{title}}
+  </div>
+</div>
+<div class="router">
+  <router-outlet #router></router-outlet>
+</div>
