@@ -42,7 +42,7 @@ export class FavorComponent implements OnInit {
     //   }
     // }
     // );
-    this.api.get('IteminVideosforUser', uid, {}).subscribe(() => console.log(), () => console.log(),() => console.log(2112));
+    this.api.get('item', uid, {}).subscribe(() => console.log(), () => console.log(),() => console.log(2112));
 }
 
 ngOnInit() {

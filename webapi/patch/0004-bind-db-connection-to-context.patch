@@ -1,0 +1,54 @@
+From 47170bc169d7d2401b1d746fe288302de6041181 Mon Sep 17 00:00:00 2001
+From: Ilya Kataev <kataev.i@gmail.com>
+Date: Tue, 25 Jun 2019 10:48:18 +0300
+Subject: [PATCH] bind db connection to context
+
+---
+ webapi/webapi/Startup.cs       | 9 ++++++++-
+ webapi/webapi/appsettings.json | 5 ++++-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/webapi/webapi/Startup.cs b/webapi/webapi/Startup.cs
+index f7fa0d8..e6ae77b 100644
+--- a/webapi/webapi/Startup.cs
++++ b/webapi/webapi/Startup.cs
+@@ -15,6 +15,9 @@ using Swashbuckle.AspNetCore.Swagger;
+ using Swashbuckle.AspNetCore.SwaggerUI;
+ using Swashbuckle.AspNetCore.SwaggerGen;
+ 
++using webapi.Models;
++using Microsoft.EntityFrameworkCore;
++
+ namespace webapi
+ {
+     public class Startup
+@@ -35,7 +38,11 @@ namespace webapi
+             services.AddSwaggerGen(c => {
+                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+             });
+-        }
++
++            // Bind connection to context
++            services.AddDbContext<youtubeappContext>(options =>
++                options.UseMySql(Configuration.GetConnectionString("myConnection")));
++            }
+ 
+         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+diff --git a/webapi/webapi/appsettings.json b/webapi/webapi/appsettings.json
+index def9159..cc3d654 100644
+--- a/webapi/webapi/appsettings.json
++++ b/webapi/webapi/appsettings.json
+@@ -4,5 +4,8 @@
+       "Default": "Warning"
+     }
+   },
+-  "AllowedHosts": "*"
++  "AllowedHosts": "*",
++  "ConnectionStrings": {
++    "myConnection": "server=localhost;port=3306;user=root;password=root;database=lofy;"
++  }
+ }
+-- 
+2.9.0.windows.1
+

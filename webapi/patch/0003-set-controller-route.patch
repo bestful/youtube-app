@@ -1,0 +1,81 @@
+From 6919ab93986bf9841e5c7ce95fe0ba326bd0af04 Mon Sep 17 00:00:00 2001
+From: Ilya Kataev <kataev.i@gmail.com>
+Date: Tue, 25 Jun 2019 10:31:30 +0300
+Subject: [PATCH] set controller route
+
+---
+ webapi/webapi/Controllers/CounterController.cs             | 2 +-
+ webapi/webapi/Controllers/IteminVideosforUserController.cs | 2 +-
+ webapi/webapi/Controllers/UserController.cs                | 2 +-
+ webapi/webapi/Controllers/VideoController.cs               | 2 +-
+ webapi/webapi/Controllers/VoteforVideoController.cs        | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/webapi/webapi/Controllers/CounterController.cs b/webapi/webapi/Controllers/CounterController.cs
+index 3d12bb6..fe297be 100644
+--- a/webapi/webapi/Controllers/CounterController.cs
++++ b/webapi/webapi/Controllers/CounterController.cs
+@@ -9,7 +9,7 @@ using webapi.Models;
+ 
+ namespace webapi.Controllers
+ {
+-    [Route("api/[controller]")]
++    [Route("api/counter")]
+     [ApiController]
+     public class CounterController : ControllerBase
+     {
+diff --git a/webapi/webapi/Controllers/IteminVideosforUserController.cs b/webapi/webapi/Controllers/IteminVideosforUserController.cs
+index bf3cfab..8a539b5 100644
+--- a/webapi/webapi/Controllers/IteminVideosforUserController.cs
++++ b/webapi/webapi/Controllers/IteminVideosforUserController.cs
+@@ -9,7 +9,7 @@ using webapi.Models;
+ 
+ namespace webapi.Controllers
+ {
+-    [Route("api/[controller]")]
++    [Route("api/item")]
+     [ApiController]
+     public class IteminVideosforUserController : ControllerBase
+     {
+diff --git a/webapi/webapi/Controllers/UserController.cs b/webapi/webapi/Controllers/UserController.cs
+index f67b190..61bf8c0 100644
+--- a/webapi/webapi/Controllers/UserController.cs
++++ b/webapi/webapi/Controllers/UserController.cs
+@@ -9,7 +9,7 @@ using webapi.Models;
+ 
+ namespace webapi.Controllers
+ {
+-    [Route("api/[controller]")]
++    [Route("api/user")]
+     [ApiController]
+     public class UserController : ControllerBase
+     {
+diff --git a/webapi/webapi/Controllers/VideoController.cs b/webapi/webapi/Controllers/VideoController.cs
+index a9269e9..1ff1e70 100644
+--- a/webapi/webapi/Controllers/VideoController.cs
++++ b/webapi/webapi/Controllers/VideoController.cs
+@@ -9,7 +9,7 @@ using webapi.Models;
+ 
+ namespace webapi.Controllers
+ {
+-    [Route("api/[controller]")]
++    [Route("api/video")]
+     [ApiController]
+     public class VideoController : ControllerBase
+     {
+diff --git a/webapi/webapi/Controllers/VoteforVideoController.cs b/webapi/webapi/Controllers/VoteforVideoController.cs
+index 3aa2138..b1a027a 100644
+--- a/webapi/webapi/Controllers/VoteforVideoController.cs
++++ b/webapi/webapi/Controllers/VoteforVideoController.cs
+@@ -9,7 +9,7 @@ using webapi.Models;
+ 
+ namespace webapi.Controllers
+ {
+-    [Route("api/[controller]")]
++    [Route("api/vote")]
+     [ApiController]
+     public class VoteforVideoController : ControllerBase
+     {
+-- 
+2.9.0.windows.1
+
