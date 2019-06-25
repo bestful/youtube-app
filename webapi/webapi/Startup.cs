@@ -15,6 +15,9 @@ using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
+using webapi.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace webapi
 {
     public class Startup
@@ -35,7 +38,11 @@ namespace webapi
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
             });
-        }
+
+            // Bind connection to context
+            services.AddDbContext<youtubeappContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("myConnection")));
+            }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
