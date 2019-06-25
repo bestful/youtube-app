@@ -41,7 +41,7 @@ namespace webapi
 
             // Bind connection to context
             services.AddDbContext<youtubeappContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("myConnection")));
+                options.UseMySQL(Configuration.GetConnectionString("myConnection")));
             }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
