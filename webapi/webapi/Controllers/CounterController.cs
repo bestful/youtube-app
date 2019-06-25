@@ -9,7 +9,7 @@ using webapi.Models;
 
 namespace webapi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/counter")]
     [ApiController]
     public class CounterController : ControllerBase
     {

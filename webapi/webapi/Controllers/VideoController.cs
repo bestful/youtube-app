@@ -9,7 +9,7 @@ using webapi.Models;
 
 namespace webapi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/video")]
     [ApiController]
     public class VideoController : ControllerBase
     {
