@@ -21,7 +21,7 @@ export class AuthService {
    }
 
    register(user: User) {
-    this.api.post('users', user);
+    return this.api.post('users', user);
    }
 
 

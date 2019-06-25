@@ -1,0 +1,55 @@
+From 276212acf0a60e3d3365c4e4ad7d8cfcf206e4b1 Mon Sep 17 00:00:00 2001
+From: Ilya Kataev <kataev.i@gmail.com>
+Date: Thu, 20 Jun 2019 11:16:46 +0300
+Subject: [PATCH] autodoc for api
+
+---
+ webapi/Startup.cs | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/webapi/Startup.cs b/webapi/Startup.cs
+index 770d515..cd779cb 100644
+--- a/webapi/Startup.cs
++++ b/webapi/Startup.cs
+@@ -11,6 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
+ using Microsoft.Extensions.Logging;
+ using Microsoft.Extensions.Options;
+ 
++using Swashbuckle.AspNetCore.Swagger;
++using Swashbuckle.AspNetCore.SwaggerUI;
++using Swashbuckle.AspNetCore.SwaggerGen;
++
+ namespace webapi
+ {
+     public class Startup
+@@ -26,6 +30,11 @@ namespace webapi
+         public void ConfigureServices(IServiceCollection services)
+         {
+             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
++            
++            // Auto Documentation of api
++            services.AddSwaggerGen(c => {
++                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
++            });
+         }
+ 
+         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+@@ -42,6 +51,15 @@ namespace webapi
+ 
+             app.UseHttpsRedirection();
+             app.UseMvc();
++            
++            // Auto Documentation of api
++                // Enable middleware to serve generated Swagger as a JSON endpoint
++            app.UseSwagger();
++
++                // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
++            app.UseSwaggerUI(c => {
++                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
++            });
+         }
+     }
+ }
+-- 
+2.9.0.windows.1
+

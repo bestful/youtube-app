@@ -19,9 +19,17 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegister(){
-    this.auth.register(this.user);
-    console.log(this.user.username, this.user.password);
-    this.toastr.success("User registered");
+    console.log(123);
+  //   this.auth.register(this.user).subscribe( data => {
+  //     console.log(data);
+  //     console.log(this.user.username, this.user.password);
+  //     this.toastr.success("User registered");
+  //   },
+  //   error => {
+  //     console.log(JSON.stringify(error));
+  //   });
+    
+    this.auth.register(this.user).subscribe(data => console.log(data),() => {},() => console.log(c));
   }
 
 }

@@ -28,20 +28,21 @@ export class FavorComponent implements OnInit {
   getFavors() {
     let uid = 1;
     // Select list of videos ids
-    this.api.get('items', uid, {}).then(res_ => {
-      let res = res_ as any;
-      for(let item of res){
-      this.api.get('videos', item.video_id).then(
-        video_ => {  
-          let video = video_ as any as Video; 
-          // Update items
-          video.link = this.repairLink(video.link);
-          video.link = this.domSanitizer.bypassSecurityTrustResourceUrl(video.link as string);
-          this.items.push(video);
-        });
-      }
-    }
-    );
+    // this.api.get('items', uid, {}).then(res_ => {
+    //   let res = res_ as any;
+    //   for(let item of res){
+    //   this.api.get('videos', item.video_id).then(
+    //     video_ => {  
+    //       let video = video_ as any as Video; 
+    //       // Update items
+    //       video.link = this.repairLink(video.link);
+    //       video.link = this.domSanitizer.bypassSecurityTrustResourceUrl(video.link as string);
+    //       this.items.push(video);
+    //     });
+    //   }
+    // }
+    // );
+    this.api.get('IteminVideosforUser', uid, {}).subscribe(() => console.log(), () => console.log(),() => console.log(2112));
 }
 
 ngOnInit() {

@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  root = 'http://localhost:59003/api/';
+  root = 'http://localhost:44347/api/';
   constructor(private http: HttpClient) {
     this.http = http;
   }
@@ -17,13 +17,13 @@ export class ApiService {
     if (typeof param1 === 'number') {
       const id = param1;
       const body = param2;
-      return this.http.get(this.root + object + '/' + id, body).toPromise();
+      return this.http.get(this.root + object + '/' + id, body);
     } else {
       const body = param1;
       if (typeof param2 !== 'undefined') {
         throw Error('ApiService:get type mismatch');
       }
-      return this.http.get(this.root + object, body).toPromise();
+      return this.http.get(this.root + object, body);
     }
   }
 
@@ -34,13 +34,13 @@ export class ApiService {
     if (typeof param1 === 'number') {
       const id = param1;
       const body = param2;
-      return this.http.post(this.root + object + '/' + id, body).toPromise();
+      return this.http.post(this.root + object + '/' + id, body);
     } else {
       const body = param1;
       if (typeof param2 !== 'undefined') {
         throw Error('ApiService:get type mismatch');
       }
-      return this.http.post(this.root + object, body).toPromise();
+      return this.http.post(this.root + object, body);
     }
   }
 
