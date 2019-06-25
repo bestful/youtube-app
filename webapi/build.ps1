@@ -9,7 +9,10 @@ cd $project
 cd ..
 # git format -1
 # .\apply_patches.ps1 $project
-git apply patch/0002-autodoc-for-api.patch
+cat patch/0002-autodoc-for-api.patch | patch -p1
+
+# git apply patch/0002-autodoc-for-api.patch
+
 cd $project
 
 & "..\make_controllers.ps1"
