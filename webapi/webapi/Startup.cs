@@ -42,7 +42,9 @@ namespace webapi
             // Bind connection to context
             services.AddDbContext<youtubeappContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("myConnection")));
-            }
+            
+            services.AddSession();
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -57,6 +59,7 @@ namespace webapi
             }
 
             app.UseHttpsRedirection();
+            app.UseSession();
             app.UseMvc();
             
             // Auto Documentation of api
@@ -67,6 +70,7 @@ namespace webapi
             app.UseSwaggerUI(c => {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+
         }
     }
 }
