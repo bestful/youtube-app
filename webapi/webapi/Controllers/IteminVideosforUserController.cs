@@ -36,7 +36,7 @@ namespace webapi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var iteminVideosforUser = await _context.IteminVideosforUser.FindAsync(id);
+            var iteminVideosforUser = await _context.IteminVideosforUser.Where(c =>  c.UserId == id).ToArrayAsync();
 
             if (iteminVideosforUser == null)
             {

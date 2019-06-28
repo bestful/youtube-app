@@ -36,7 +36,7 @@ namespace webapi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var voteforVideo = await _context.VoteforVideo.FindAsync(id);
+            var voteforVideo = await _context.VoteforVideo.Where(vote => vote.VideoId == id).ToArrayAsync();
 
             if (voteforVideo == null)
             {
