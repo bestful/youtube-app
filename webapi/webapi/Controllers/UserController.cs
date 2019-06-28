@@ -9,7 +9,7 @@ using webapi.Models;
 
 namespace webapi.Controllers
 {
-    [Route("api/user")]
+    [Route("api")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -20,70 +20,9 @@ namespace webapi.Controllers
             _context = context;
         }
 
-        // GET: api/User
-        [HttpGet]
-        public IEnumerable<User> GetUser()
-        {
-            return _context.User;
-        }
-
-        // GET: api/User/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var user = await _context.User.FindAsync(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(user);
-        }
-
-        // PUT: api/User/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser([FromRoute] int id, [FromBody] User user)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != user.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         // POST: api/User
-        [HttpPost]
-        public async Task<IActionResult> PostUser([FromBody] User user)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] User user)
         {
             if (!ModelState.IsValid)
             {
@@ -96,30 +35,70 @@ namespace webapi.Controllers
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
-        // DELETE: api/User/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
+        [HttpPost("authorize")]
+        public ActionResult Authorize(User user){
+            if (!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
 
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
-            {
+            try{
+                User f = _context.User.First(u => u.Username == user.Username);
+
+                if (f.Password == user.Password){
+                    authorized_id = f.Id;
+                    return Ok();
+                }
+                else {
+                    return Unauthorized();
+                }
+            }
+            catch(InvalidOperationException){
                 return NotFound();
             }
+        }
 
-            _context.User.Remove(user);
-            await _context.SaveChangesAsync();
+        [HttpGet("logout")]
+        public ActionResult Logout(){
+            HttpContext.Session.Clear();
+            return Ok();
+        }
 
-            return Ok(user);
+        [HttpGet("account")]
+        public ActionResult Account(){
+            var user_id = authorized_id;
+            // if authorized
+            if(user_id != null){
+                User user =  _context.User.Find(user_id);
+                return Ok(user);
+            }
+            else {
+                return Unauthorized();
+            }
+            
         }
 
         private bool UserExists(int id)
         {
             return _context.User.Any(e => e.Id == id);
+        }
+
+        // My classes
+        const string session_AuthorizedID = "user_id";
+
+        // Authorized user id 
+        private int? authorized_id{
+            get{
+                return HttpContext.Session.GetInt32(session_AuthorizedID);
+            }
+            set{
+                if(value != null)
+                    HttpContext.Session.SetInt32(session_AuthorizedID, (int)value);
+            }
+        }
+        private bool authorized{
+            get{
+                return authorized_id != null;
+            }
         }
     }
 }
