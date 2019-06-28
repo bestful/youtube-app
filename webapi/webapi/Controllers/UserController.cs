@@ -22,17 +22,21 @@ namespace webapi.Controllers
 
         // POST: api/User
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] User user)
+        public ActionResult Register(User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            try{
+                _context.User.Add(user);
+                _context.SaveChanges();
+            }
+            catch(Exception){
+                return StatusCode(403, "User with this name already registered");
+            }
 
-            _context.User.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("Register", new { id = user.Id }, user);
         }
 
         [HttpPost("authorize")]
@@ -49,11 +53,11 @@ namespace webapi.Controllers
                     return Ok();
                 }
                 else {
-                    return Unauthorized();
+                    return StatusCode(401, "Incorrect password");
                 }
             }
             catch(InvalidOperationException){
-                return NotFound();
+                return NotFound("User with name " + user.Username +" not found");
             }
         }
 
