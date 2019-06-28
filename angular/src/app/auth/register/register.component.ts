@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
   //     console.log(JSON.stringify(error));
   //   });
 
-     this.auth.register(this.user).subscribe(data => console.log(data),() => {},() => console.log(c));
+     this.auth.register(this.user);
   }
 
 }
