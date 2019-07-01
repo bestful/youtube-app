@@ -1,7 +1,7 @@
-<section class="register">
-  <div class="form-red">
+<section class="register" (keyup.enter)="onLogin();" >
+  <div class="form-red" (keyup)="formValid = password.value == check.value && !username.invalid && !password.invalid">
     <div class="form-group"><label for="">Username</label><input [(ngModel)]="user.username" type="text"
-        class="form-control" #username="ngModel" required minlength="4"></div>
+        class="form-control" #username="ngModel" required minlength="4" appAutofocus></div>
     <div class="form-group"><label for="">Password</label><input [(ngModel)]="user.password" type="password"
         class="form-control" #password="ngModel" required minlength="4"></div>
     <div class="form-group"><label for="">Repeat password</label><input type="password" #check class="form-control" ngModel
@@ -26,9 +26,16 @@
       </div>
     </div>
     <!-- Password equality-->
-    <div *ngIf="password.value == check.value" class="alert alert-danger">
+    <div *ngIf="repeat.touched  && password.value != check.value" class="alert alert-danger">
         Password must be equal
     </div>
-    <button class="btn btn-danger" type="button" (click)="onRegister();" [disabled]="">Register</button>
+    <div class="custom-control custom-checkbox">
+      <input class="custom-control-input validator" type="checkbox" name="" [checked]="formValid" disabled>
+      <label for="my-input" class="custom-control-label">I write valid information</label>
+    </div>
+
+    <button *ngIf="formValid" class="btn btn-danger" type="button" (click)="onRegister();">Register</button>
+    
+    <!-- *ngIf="password.value != check.value || username.invalid || password.invalid" -->
   </div>
 </section>

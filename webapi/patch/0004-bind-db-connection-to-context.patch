@@ -46,7 +46,7 @@ index def9159..cc3d654 100644
 -  "AllowedHosts": "*"
 +  "AllowedHosts": "*",
 +  "ConnectionStrings": {
-+    "myConnection": "server=localhost;port=3306;user=root;password=root;database=lofy;"
++    "myConnection": "server=localhost;port=3306;user=root;password=root;database=youtube-app;"
 +  }
  }
 -- 

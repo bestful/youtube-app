@@ -18,6 +18,8 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using webapi.Models;
 using Microsoft.EntityFrameworkCore;
 
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
+
 namespace webapi
 {
     public class Startup
@@ -44,7 +46,22 @@ namespace webapi
                 options.UseMySQL(Configuration.GetConnectionString("myConnection")));
             
             services.AddSession();
-        }
+
+            // Add AllowAll policy just like in single controller example.
+            services.AddCors(options => {
+                options.AddPolicy("AllowAll",
+                builder => {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader().AllowCredentials();
+                });
+            });
+
+            services.Configure<MvcOptions>(options => {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAll"));
+            });
+
+            }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -59,8 +76,11 @@ namespace webapi
             }
 
             app.UseHttpsRedirection();
+            app.UseCookiePolicy();
             app.UseSession();
             app.UseMvc();
+            
+            app.UseCors("AllowAll");
             
             // Auto Documentation of api
                 // Enable middleware to serve generated Swagger as a JSON endpoint

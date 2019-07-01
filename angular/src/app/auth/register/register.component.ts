@@ -11,11 +11,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RegisterComponent implements OnInit {
   user: User;
+  formValid: boolean;
 
   constructor(private auth: AuthService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.user = new User();
+    this.formValid = false;
   }
 
   onRegister(){

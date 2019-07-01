@@ -10,6 +10,7 @@ export class CredentionalComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }

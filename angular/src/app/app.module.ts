@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import {ToastrModule} from 'ngx-toastr';
 import { ApiService } from './service';
 import {ToastrService} from 'ngx-toastr';
+import { AutofocusDirective } from './_directive/autofocus.directive';
 
 
 
@@ -31,7 +32,8 @@ import {ToastrService} from 'ngx-toastr';
     RegisterComponent,
     CredentionalComponent,
     FavorComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    AutofocusDirective
   ],
   imports: [
     BrowserModule,

@@ -41,6 +41,7 @@ namespace webapi.Controllers
 
         [HttpPost("authorize")]
         public ActionResult Authorize(User user){
+                            Console.WriteLine(HttpContext.Session.GetHashCode());
             if (!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
@@ -59,6 +60,8 @@ namespace webapi.Controllers
             catch(InvalidOperationException){
                 return NotFound("User with name " + user.Username +" not found");
             }
+
+            
         }
 
         [HttpGet("logout")]
