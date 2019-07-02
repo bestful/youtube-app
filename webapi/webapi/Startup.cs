@@ -20,6 +20,8 @@ using Microsoft.EntityFrameworkCore;
 
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
+using Microsoft.AspNetCore.SpaServices.AngularCli;
+
 namespace webapi
 {
     public class Startup
@@ -35,6 +37,12 @@ namespace webapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // In production, the Angular files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
             
             // Auto Documentation of api
             services.AddSwaggerGen(c => {
@@ -78,6 +86,9 @@ namespace webapi
             app.UseHttpsRedirection();
             app.UseCookiePolicy();
             app.UseSession();
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
+
             app.UseMvc();
             
             app.UseCors("AllowAll");
@@ -89,6 +100,19 @@ namespace webapi
                 // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
             app.UseSwaggerUI(c => {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
+            app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
+
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
             });
 
         }
