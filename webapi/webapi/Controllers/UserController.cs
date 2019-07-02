@@ -41,8 +41,6 @@ namespace webapi.Controllers
 
         [HttpPost("authorize")]
         public ActionResult Authorize(User user){
-                            Console.WriteLine(HttpContext.Session.GetHashCode());
-                            HttpContext.Authentication.SignInAsync()
             if (!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
