@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CredentionalComponent } from './credentional.component';
+import { CredentionalComponent } from './credential.component';
 
 describe('CredentionalComponent', () => {
   let component: CredentionalComponent;

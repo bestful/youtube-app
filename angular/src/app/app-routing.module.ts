@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { CredentionalComponent } from './account/credentional/credentional.component';
+import { CredentialComponent } from './account/credential/credential.component';
 import { FavorComponent } from './account/favor/favor.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   // Account
-  { path: 'credentional', component: CredentionalComponent },
+  { path: 'credential', component: CredentialComponent },
   { path: 'favor', component: FavorComponent },
 ];
 

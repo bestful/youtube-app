@@ -24,10 +24,12 @@ namespace webapi.Controllers
         [HttpGet]
         public IEnumerable<IteminVideosforUser> GetIteminVideosforUser()
         {
-            int user_id = (int) HttpContext.Session.GetInt32("user_id");
-            var iteminVideosforUser = _context.IteminVideosforUser.Where(item =>  item.UserId == user_id);
-
-            return iteminVideosforUser;
+            int? user_id = HttpContext.Session.GetInt32("user_id");
+            if(user_id == null){
+                
+            }
+            var items = _context.IteminVideosforUser.Where(item =>  item.UserId == user_id);
+            return items;
         }
 
         // GET: api/IteminVideosforUser/5

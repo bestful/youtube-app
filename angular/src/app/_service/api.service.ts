@@ -11,17 +11,35 @@ export class ApiService {
     this.http = http;
   }
 
-  authorized_id(){
-    return this.http.post(this.root + 'authorize', {username: 'string', password: 'string'}, {withCredentials: true, observe: 'response'}).toPromise().then(res =>{
-      console.log(res);
-    })
+// tslint:disable-next-line: variable-name
+  _authorized_id = -1;
+
+   async authorized_id(){
+    await this.get('account').subscribe(
+      next => {
+        // this._authorized_id = next.id;
+        console.log(this._authorized_id);
+      },
+      error => {
+        this._authorized_id = -1;
+      }
+    );
+    return this._authorized_id;
+  }
+
+  authorized(){
+    if (this._authorized_id < 0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   auth(user: any){
-    let observable =  this.post('authorize', user);
+    const observable =  this.post('authorize', user);
     observable.subscribe(next => {
-      
-    })
+
+    });
   }
 
   // object + body

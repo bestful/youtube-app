@@ -13,15 +13,15 @@
       {{x.description}}
     </div>
     <div class="block-image">
-        <iframe
-        [src]="x.link" frameborder="0" 
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen></iframe>
+      <iframe [src]="x.link" frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <div class="block-delete">
       X
     </div>
+    <circle-progress [percent]="85" [radius]="20" title="test">
+    </circle-progress>
   </div>
 </section>
 
-<button class="btn btn-primary" type="button" (click)="getFavors();">Text</button>  
+<button class="btn btn-primary" type="button" (click)="getFavors();">Text</button>

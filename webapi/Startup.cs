@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -68,6 +68,9 @@ namespace webapi
             services.Configure<MvcOptions>(options => {
                 options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAll"));
             });
+
+            services.AddDbContext<youtubeappContect>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("youtubeappContect")));
 
             }
 

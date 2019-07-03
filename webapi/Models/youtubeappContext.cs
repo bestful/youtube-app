@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using webapi.Models;
 
 namespace webapi.Models
 {
@@ -178,6 +179,50 @@ namespace webapi.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_vote_video1");
             });
+
+            modelBuilder.Query<Favourite>(query =>
+            {
+                query.ToView("favourite");
+                query.Property(e => e.Id)
+                    .HasColumnName("video_id")
+                    .HasColumnType("int");
+
+                query.Property(e => e.UserId)
+                    .HasColumnName("user_id")
+                    .HasColumnType("int");
+
+                query.Property(e => e.Avg)
+                    .HasColumnName("avg")
+                    .HasColumnType("double");
+
+                // Pasted from video
+                query.Property(e => e.Description)
+                    .HasColumnName("description")
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                query.Property(e => e.Link)
+                    .IsRequired()
+                    .HasColumnName("link")
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+
+                query.Property(e => e.Thubmail)
+                    .HasColumnName("thubmail")
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+
+                query.Property(e => e.Title)
+                    .IsRequired()
+                    .HasColumnName("title")
+                    .HasMaxLength(90)
+                    .IsUnicode(false);
+            });
+
+
         }
+
+        public DbQuery<Favourite> Favourite;
+
     }
 }

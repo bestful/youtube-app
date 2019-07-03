@@ -42,6 +42,7 @@
   grid-gap: 10px;
   background-color: rgba(255, 255, 255, 0.459);
   margin-bottom: 1cm;
+  padding: 20px;
 }
 
 .videos > .block .block-title {

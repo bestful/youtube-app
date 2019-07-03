@@ -25,8 +25,8 @@ export class AppComponent {
       auth: true
     },
     {
-      label: 'Credentional',
-      routerLink: '/credentional',
+      label: 'Credential',
+      routerLink: '/credential',
       auth: true
     }
   ];
