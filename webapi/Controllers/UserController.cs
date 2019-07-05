@@ -92,7 +92,7 @@ namespace webapi.Controllers
         const string session_AuthorizedID = "user_id";
 
         // Authorized user id 
-        private int? authorized_id{
+        public int? authorized_id{
             get{
                 return HttpContext.Session.GetInt32(session_AuthorizedID);
             }
@@ -101,7 +101,7 @@ namespace webapi.Controllers
                     HttpContext.Session.SetInt32(session_AuthorizedID, (int)value);
             }
         }
-        private bool authorized{
+        public bool authorized{
             get{
                 return authorized_id != null;
             }

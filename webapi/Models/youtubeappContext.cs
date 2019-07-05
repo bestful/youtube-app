@@ -17,7 +17,7 @@ namespace webapi.Models
         }
 
         public virtual DbSet<Counter> Counter { get; set; }
-        public virtual DbSet<IteminVideosforUser> IteminVideosforUser { get; set; }
+        public virtual DbSet<item> item { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Video> Video { get; set; }
         public virtual DbSet<VoteforVideo> VoteforVideo { get; set; }
@@ -58,7 +58,7 @@ namespace webapi.Models
                     .HasColumnType("int(11)");
             });
 
-            modelBuilder.Entity<IteminVideosforUser>(entity =>
+            modelBuilder.Entity<item>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.VideoId });
 
@@ -76,13 +76,13 @@ namespace webapi.Models
                     .HasColumnType("int(11)");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.IteminVideosforUser)
+                    .WithMany(p => p.item)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_itemIn_videosFor_user_user1");
 
                 entity.HasOne(d => d.Video)
-                    .WithMany(p => p.IteminVideosforUser)
+                    .WithMany(p => p.item)
                     .HasForeignKey(d => d.VideoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_itemIn_videosFor_user_video1");
@@ -183,13 +183,14 @@ namespace webapi.Models
             modelBuilder.Query<Favourite>(query =>
             {
                 query.ToView("favourite");
-                query.Property(e => e.Id)
-                    .HasColumnName("video_id")
-                    .HasColumnType("int");
 
                 query.Property(e => e.UserId)
                     .HasColumnName("user_id")
-                    .HasColumnType("int");
+                    .HasColumnType("int(11)");
+
+                query.Property(e => e.VideoId)
+                    .HasColumnName("video_id")
+                    .HasColumnType("int(11)");
 
                 query.Property(e => e.Avg)
                     .HasColumnName("avg")
@@ -222,7 +223,7 @@ namespace webapi.Models
 
         }
 
-        public DbQuery<Favourite> Favourite;
+        public virtual DbQuery<Favourite> Favourite {get; set;}
 
     }
 }

@@ -7,7 +7,7 @@ namespace webapi.Models
     {
         public Video()
         {
-            IteminVideosforUser = new HashSet<IteminVideosforUser>();
+            item = new HashSet<item>();
             VoteforVideo = new HashSet<VoteforVideo>();
         }
 
@@ -17,7 +17,7 @@ namespace webapi.Models
         public string Thubmail { get; set; }
         public string Description { get; set; }
 
-        public ICollection<IteminVideosforUser> IteminVideosforUser { get; set; }
+        public ICollection<item> item { get; set; }
         public ICollection<VoteforVideo> VoteforVideo { get; set; }
     }
 }

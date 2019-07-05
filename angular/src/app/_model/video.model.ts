@@ -5,4 +5,6 @@ export class Video {
   title: String;
   link: SafeResourceUrl;
   description: String; 
+  avg: Number;
+  ownerMark: Number;
 }

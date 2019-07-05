@@ -5,15 +5,18 @@
     <!-- Navbar navigation -->
     <!-- If guest -->
     <li class="nav-item" *ngFor="let menu of menus">
-        <a *ngIf="!menu.auth" class="nav-link" [routerLink]="menu.routerLink" (click)="title = menu.label">{{menu.label}}</a>
+        <a *ngIf="!authorized() && !menu.auth" class="nav-link" [routerLink]="menu.routerLink" (click)="title = menu.label">{{menu.label}}</a>
     </li>
     <!-- If authorized -->
     <li class="nav-item" *ngFor="let menu of menus">
-        <a *ngIf="menu.auth" class="nav-link" [routerLink]="menu.routerLink" (click)="title = menu.label">{{menu.label}}</a>
+        <a *ngIf="authorized() && menu.auth" class="nav-link" [routerLink]="menu.routerLink" (click)="title = menu.label">{{menu.label}}</a>
+    </li>
+    <li class="nav-item" *ngIf="authorized()">
+        <a class="nav-link" (click)="logout()">Exit</a>
     </li>
   </ul>
   <div class="navbar-after" *ngIf="title">
-    {{title}}
+    <!-- {{title}} -->
   </div>
 </div>
 <div class="router">

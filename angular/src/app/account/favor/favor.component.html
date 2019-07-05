@@ -1,6 +1,34 @@
+<!-- Modals -->
+
+<ngx-smart-modal #modalAddItem identifier="modalAddItem">
+    <div class="form-group">
+      <label for="">Link</label>
+      <input [(ngModel)]="video.link" type="text" class="form-control" autofocus>
+    </div>
+    <div class="form-group">
+      <label for="">Title</label>
+      <input [(ngModel)]="video.title" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <textarea [(ngModel)]="video.description" class="form-control" rows="5"></textarea>
+    </div>
+    <!-- <option value="">1</option>
+    <option value="">2</option>
+    <option value="">3</option>
+    <option value="">4</option>
+    <option value="">5</option> -->
+
+  <button class="btn" (click)="createFavor()"type="button">Create</button>
+  <button class="btn" (click)="modalAddItem.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- --------------------------- -->
+  
+
 <section class="toolbar">
-  <h2 class="add">+</h2>
-  <h2 class="delete">-</h2>
+  <div class="btn add" (click)="modalAddItem.open()">+</div>
+  <div class="btn delete">-</div>
 </section>
 <section class="videos">
   <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/Ya_4rht4DG8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
@@ -9,9 +37,9 @@
   </div>
   <div class="block" *ngFor="let x of items">
     <div class="block-title">{{x.title}}</div>
-    <div class="block-content">
+    <!-- <div class="block-content">
       {{x.description}}
-    </div>
+    </div> -->
     <div class="block-image">
       <iframe [src]="x.link" frameborder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -19,9 +47,30 @@
     <div class="block-delete">
       X
     </div>
-    <circle-progress [percent]="85" [radius]="20" title="test">
-    </circle-progress>
+    <!-- TODO : block this -->
+    <div class="circle">
+      <div *ngIf="x.avg>0">
+        <circle-progress [percent]="(x.avg/5)*(x.avg/5)*100" [title]="x.avg.toFixed(1)" radius="30"></circle-progress>
+      </div>
+      <div *ngIf="x.avg==0">
+        <circle-progress [percent]="0" title="?" innerStrokeColor="green" radius="30"></circle-progress>
+      </div>
+    </div>
+    <div class="mark">
+      <div class="form-group">
+        <!-- <label for="mark">Mark</label> -->
+        <select id="mark" class="form-control" name="" (change)="updateVote(x.id, $event.target.value)">
+          <option value="" [selected]="x.mark == 0">?</option>
+          <option value="1" [selected]="x.mark == 1">1</option>
+          <option value="2" [selected]="x.mark == 2">2</option>
+          <option value="3" [selected]="x.mark == 3">3</option>
+          <option value="4" [selected]="x.mark == 4">4</option>
+          <option value="5" [selected]="x.mark == 5">5</option>
+        </select>
+        {{mark | json}}
+      </div>
+    </div>
+
+
   </div>
 </section>
-
-<button class="btn btn-primary" type="button" (click)="getFavors();">Text</button>

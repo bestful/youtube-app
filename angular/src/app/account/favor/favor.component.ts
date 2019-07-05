@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from "../../service"
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ApiService, OembedService } from "../../service"
 import { Video } from 'src/app/model';
 import { forEach } from '@angular/router/src/utils/collection';
 import { Url } from 'url';
 import { DomSanitizer } from '@angular/platform-browser';
 import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
+import { ToastrService } from 'ngx-toastr';
+import { NgxSmartModalService } from 'ngx-smart-modal';
+import { AccountService } from '../account.service';
 
 
 @Component({
@@ -14,61 +17,72 @@ import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 })
 export class FavorComponent implements OnInit {
 
-  constructor(private api: ApiService, public domSanitizer: DomSanitizer) {
-    this.items;
+  constructor(private api: ApiService, public domSanitizer: DomSanitizer, private toastr: ToastrService, public modal: NgxSmartModalService, private account: AccountService) {
+ 
   }
 
-  items: Array<Video> = new Array<Video>();
 
+  items: Array<Video> = new Array<Video>();
+  video: Video = new Video();
+
+  selected_mark: string;
+
+
+  error_lambda: any = error => {
+    if (error.status > 0) {
+      this.toastr.error(error.error);
+    } else {
+      this.toastr.error('Connection error!');
+    }
+  }
 
   repairLink(link) {
     return link.replace(/\/watch\?v=(.{11})/, '/embed/$1');
   }
 
 
-  getFavors() {
-    let uid = 1;
-    // Select list of videos ids
-    // this.api.get('item', 1).toPromise().then(res_ => {
-    //   let res = res_ as any;
-    //   for(let item of res){
-    //   this.api.get('video', item.video_id).toPromise().then(
-    //     videos => {  
-    //       for (x in videos){
-            
-    //       }
-    //     });
-    //   }
-    // }
-    // );
-    // this.api.get('item', uid, {}).subscribe(() => console.log(), () => console.log(),() => console.log(2112));
+  updateFavors() {
+    let uid = this.account.id;
 
-    this.api.get('item').subscribe(
+    this.api.get('favourite', uid).subscribe(
       data => {
-        console.log(data);
-// tslint:disable-next-line: forin
+        // tslint:disable-next-line: forin
         for (const id in data){
-          const videoId = data[id].videoId;
-          this.api.get('video', videoId).subscribe(
-            data => {
-              let video = data as any as Video;
-              // video.link = this.repairLink(video.link);
-              video.link = this.domSanitizer.bypassSecurityTrustResourceUrl(this.repairLink(video.link));
-              
-              this.items.push(video);
-            }
-          );
+          const favor = data[id];
+          let video: Video = favor;
 
+          // Block of link repairing
+          video.link = this.domSanitizer.bypassSecurityTrustResourceUrl(this.repairLink(video.link));
+
+          this.items.push(video);
         }
       },
-      error => {
-
-      }
+      this.error_lambda
     );
-}
+  }
+
+  createFavor(){
+    this.api.post('video', this.video).subscribe(
+      next =>  {
+        this.modal.getModal('myModal').close();
+        this.toastr.success('Video successfully added!');
+        this.updateFavors();
+      },
+      this.error_lambda
+    );
+  }
+
+  updateVote(id: Number, mark: Number){
+    console.log(mark);
+    this.api.put('vote', id, {mark: mark});
+  }
+
+  deleteFavor(video_id: Number){
+    this.api.delete('item', video_id);
+  }
 
 ngOnInit() {
-  this.getFavors();
+  this.updateFavors();
 }
 
 }

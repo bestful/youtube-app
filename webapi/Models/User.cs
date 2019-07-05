@@ -7,7 +7,7 @@ namespace webapi.Models
     {
         public User()
         {
-            IteminVideosforUser = new HashSet<IteminVideosforUser>();
+            item = new HashSet<item>();
             VoteforVideo = new HashSet<VoteforVideo>();
         }
 
@@ -15,7 +15,7 @@ namespace webapi.Models
         public string Username { get; set; }
         public string Password { get; set; }
 
-        public ICollection<IteminVideosforUser> IteminVideosforUser { get; set; }
+        public ICollection<item> item { get; set; }
         public ICollection<VoteforVideo> VoteforVideo { get; set; }
     }
 }

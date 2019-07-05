@@ -22,9 +22,31 @@ import {ToastrModule} from 'ngx-toastr';
 import { ApiService } from './service';
 import {ToastrService} from 'ngx-toastr';
 import { AutofocusDirective } from './_directive/autofocus.directive';
-import {NgCircleProgressModule} from 'ng-circle-progress';
+import {NgCircleProgressModule, CircleProgressOptions} from 'ng-circle-progress';
+import {NgxSmartModalModule} from 'ngx-smart-modal';
 
 
+const circleProgressOptions: CircleProgressOptions = {
+  'radius': 60,
+  'space': -10,
+  'outerStrokeGradient': true,
+  'outerStrokeWidth': '13',
+  'outerStrokeColor': '#4882c2',
+  'outerStrokeGradientStopColor': '#53a9ff',
+  'innerStrokeColor': '#e7e8ea',
+  'innerStrokeWidth': 10,
+  // "title": "UI",
+  // "subtitle" : "",
+  'titleFontSize': '21',
+  'subtitleFontSize': '33',
+  'animateTitle': false,
+  'animationDuration': '0',
+  'showTitle': false,
+  'showUnits': false,
+  'showBackground': false,
+  'clockwise': false,
+  'startFromZero': false
+} as any;
 
 
 @NgModule({
@@ -35,7 +57,7 @@ import {NgCircleProgressModule} from 'ng-circle-progress';
     CredentialComponent,
     FavorComponent,
     WelcomeComponent,
-    AutofocusDirective
+    AutofocusDirective,
   ],
   imports: [
     BrowserModule,
@@ -44,29 +66,28 @@ import {NgCircleProgressModule} from 'ng-circle-progress';
     AppRoutingModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    NgxSmartModalModule.forRoot(),
     NgCircleProgressModule.forRoot({
-      backgroundStrokeWidth: 0,
-      radius: 20,
-      space: -6,
-      maxPercent: 1000,
-      unitsFontWeight: "500",
+      radius: 60,
+      space: -10,
       outerStrokeGradient: true,
-      outerStrokeWidth: 10,
-      outerStrokeColor: "#4882c2",
-      outerStrokeGradientStopColor: "#53a9ff",
-      // outerStrokeLinecap: "square",
-      innerStrokeColor: "#ff0909",
-      innerStrokeWidth: 3,
-      title: "UI",
-      titleFontSize: "22",
-      titleFontWeight: "500",
-      // animateTitle: false,
-      // animationDuration: 200,
-      // showSubtitle: false,
-      // showUnits: false,
-      // showBackground: false,
+      outerStrokeWidth: 13,
+      outerStrokeColor: '#4882c2',
+      outerStrokeGradientStopColor: '#53a9ff',
+      innerStrokeColor: '#e7e8ea',
+      innerStrokeWidth: 10,
+      // "title": "UI",
+      // subtitle : 'auto',
+      titleFontSize: '21',
+      subtitleFontSize: '33',
+      animateTitle: false,
+      animationDuration: 0,
+      showTitle: true,
+      showSubtitle: false,
+      showUnits: false,
+      showBackground: false,
       clockwise: false,
-      // startFromZero: false
+      startFromZero: false
     })
   ],
   providers: [HttpClient, ApiService, ToastrService],

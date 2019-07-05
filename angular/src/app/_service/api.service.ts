@@ -9,22 +9,22 @@ export class ApiService {
   root = 'https://localhost:5001/api/';
   constructor(private http: HttpClient) {
     this.http = http;
+    this.authorized_id();
   }
 
 // tslint:disable-next-line: variable-name
   _authorized_id = -1;
 
-   async authorized_id(){
-    await this.get('account').subscribe(
+    authorized_id(){
+    this.get('account').subscribe(
       next => {
-        // this._authorized_id = next.id;
-        console.log(this._authorized_id);
+        this._authorized_id = (next as any).id;
+        // console.log(this._authorized_id);
       },
       error => {
         this._authorized_id = -1;
       }
     );
-    return this._authorized_id;
   }
 
   authorized(){
@@ -74,6 +74,14 @@ export class ApiService {
       }
       return this.http.post(this.root + object, body, {withCredentials: true});
     }
+  }
+
+  delete(object: string, id: Number) {
+      return this.http.delete(this.root + object + id);
+  }
+
+  put(object: string, id: Number, body: any) {
+    return this.http.delete(this.root + object + id, body);
   }
 
 }

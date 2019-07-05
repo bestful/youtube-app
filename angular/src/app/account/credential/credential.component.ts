@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'app-credential',
@@ -7,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CredentialComponent implements OnInit {
 
-  constructor() { }
+  constructor(public account: AccountService) { }
 
   ngOnInit() {
-    
+    this.account.updateAccount();
   }
+
+  acc(){
+  }
+
 
 }

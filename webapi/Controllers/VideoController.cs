@@ -83,17 +83,32 @@ namespace webapi.Controllers
 
         // POST: api/Video
         [HttpPost]
-        public async Task<IActionResult> PostVideo([FromBody] Video video)
+        public ActionResult PostVideo([FromBody] Video video)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Video.Add(video);
-            await _context.SaveChangesAsync();
+            // Authorize check
+            int? uid = HttpContext.Session.GetInt32("user_id");
+            if(uid == null){
+                return StatusCode(401, "Pleasy authorize, we need to bind your video for you)");
+            }
 
-            return CreatedAtAction("GetVideo", new { id = video.Id }, video);
+            // Creating video
+            _context.Video.Add(video);
+
+            //Creating item binding
+            item item = new item();
+            item.UserId = (int) uid;
+            item.VideoId = video.Id;
+
+            _context.item.Add(item);
+
+            _context.SaveChangesAsync();
+
+            return Ok(video);
         }
 
         // DELETE: api/Video/5

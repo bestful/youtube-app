@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ApiService } from './service';
+import { AccountService } from './account/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -30,4 +33,20 @@ export class AppComponent {
       auth: true
     }
   ];
+
+  constructor(public account: AccountService, private router: Router){
+  }
+
+  ngOnInit(){
+    this.account.updateAccount();
+  }
+
+  authorized(){
+    return this.account.authorized;
+  }
+
+  logout(){
+    this.account.logout();
+    this.router.navigateByUrl('login');
+  }
 }

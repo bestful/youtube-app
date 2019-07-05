@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace webapi.Models
 {
-    public partial class IteminVideosforUser
+    public partial class item
     {
         public int UserId { get; set; }
         public int VideoId { get; set; }

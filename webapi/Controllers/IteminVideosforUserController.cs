@@ -11,61 +11,66 @@ namespace webapi.Controllers
 {
     [Route("api/item")]
     [ApiController]
-    public class IteminVideosforUserController : ControllerBase
+    public class itemController : ControllerBase
     {
         private readonly youtubeappContext _context;
 
-        public IteminVideosforUserController(youtubeappContext context)
+        public itemController(youtubeappContext context)
         {
             _context = context;
         }
 
-        // GET: api/IteminVideosforUser
+        // GET: api/item
         [HttpGet]
-        public IEnumerable<IteminVideosforUser> GetIteminVideosforUser()
+        public IEnumerable<item> Getitem()
         {
             int? user_id = HttpContext.Session.GetInt32("user_id");
             if(user_id == null){
-                
+                return null;
             }
-            var items = _context.IteminVideosforUser.Where(item =>  item.UserId == user_id);
+            var items = _context.item.Where(item =>  item.UserId == user_id);
             return items;
         }
 
-        // GET: api/IteminVideosforUser/5
+        // GET: api/item/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetIteminVideosforUser([FromRoute] int id)
+        public async Task<IActionResult> Getitem([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var iteminVideosforUser = await _context.IteminVideosforUser.Where(c =>  c.UserId == id).ToArrayAsync();
+            int? user_id = HttpContext.Session.GetInt32("user_id");
+            if(user_id == null){
+                return Unauthorized();
+            }
 
-            if (iteminVideosforUser == null)
+            var item = await _context.item.Where(c =>  c.UserId == user_id && c.VideoId == id).ToArrayAsync();
+
+            if (item == null)
             {
                 return NotFound();
             }
 
-            return Ok(iteminVideosforUser);
+            return Ok(item);
         }
 
-        // PUT: api/IteminVideosforUser/5
+        // PUT: api/item/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutIteminVideosforUser([FromRoute] int id, [FromBody] IteminVideosforUser iteminVideosforUser)
+        public async Task<IActionResult> Putitem([FromRoute] int id, [FromBody] item item)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != iteminVideosforUser.UserId)
+            if (id != item.UserId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(iteminVideosforUser).State = EntityState.Modified;
+            _context.Entry(item).State = EntityState.Modified;
 
             try
             {
@@ -73,7 +78,7 @@ namespace webapi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!IteminVideosforUserExists(id))
+                if (!itemExists(id))
                 {
                     return NotFound();
                 }
@@ -86,23 +91,23 @@ namespace webapi.Controllers
             return NoContent();
         }
 
-        // POST: api/IteminVideosforUser
+        // POST: api/item
         [HttpPost]
-        public async Task<IActionResult> PostIteminVideosforUser([FromBody] IteminVideosforUser iteminVideosforUser)
+        public async Task<IActionResult> Postitem([FromBody] item item)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.IteminVideosforUser.Add(iteminVideosforUser);
+            _context.item.Add(item);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (IteminVideosforUserExists(iteminVideosforUser.UserId))
+                if (itemExists(item.UserId))
                 {
                     return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -112,33 +117,33 @@ namespace webapi.Controllers
                 }
             }
 
-            return CreatedAtAction("GetIteminVideosforUser", new { id = iteminVideosforUser.UserId }, iteminVideosforUser);
+            return CreatedAtAction("Getitem", new { id = item.UserId }, item);
         }
 
-        // DELETE: api/IteminVideosforUser/5
+        // DELETE: api/item/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteIteminVideosforUser([FromRoute] int id)
+        public async Task<IActionResult> Deleteitem([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var iteminVideosforUser = await _context.IteminVideosforUser.FindAsync(id);
-            if (iteminVideosforUser == null)
+            var item = await _context.item.FindAsync(id);
+            if (item == null)
             {
                 return NotFound();
             }
 
-            _context.IteminVideosforUser.Remove(iteminVideosforUser);
+            _context.item.Remove(item);
             await _context.SaveChangesAsync();
 
-            return Ok(iteminVideosforUser);
+            return Ok(item);
         }
 
-        private bool IteminVideosforUserExists(int id)
+        private bool itemExists(int id)
         {
-            return _context.IteminVideosforUser.Any(e => e.UserId == id);
+            return _context.item.Any(e => e.UserId == id);
         }
     }
 }

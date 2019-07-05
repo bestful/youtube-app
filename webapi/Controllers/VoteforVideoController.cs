@@ -50,11 +50,6 @@ namespace webapi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutVoteforVideo([FromRoute] int id, [FromBody] VoteforVideo voteforVideo)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != voteforVideo.VideoId)
             {
                 return BadRequest();

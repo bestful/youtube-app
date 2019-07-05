@@ -4,6 +4,8 @@ import { User, Video } from '../model'
 import { ApiService } from '../service'
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { AccountService } from '../account/account.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class AuthService {
   hashkey: string;
   user: User;
 
-  constructor(private api: ApiService, private toastr: ToastrService) {
+  constructor(private api: ApiService, private account: AccountService, private toastr: ToastrService, private router: Router) {
   }
 
   error_lambda: any = error => {
@@ -26,7 +28,10 @@ export class AuthService {
 
   authorize(user: User) {
     return this.api.post("authorize", user).subscribe(
-      next => console.log(next),
+      next => {
+        this.account.updateAccount();
+        this.router.navigateByUrl('favor');
+      },
       this.error_lambda
     );
   }

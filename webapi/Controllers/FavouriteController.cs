@@ -9,18 +9,22 @@ using webapi.Models;
 
 namespace webapi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/favourite")]
     [ApiController]
     public class FavouriteController : ControllerBase
     {
-        private readonly youtubeappContect _context;
+        private readonly youtubeappContext _context;
 
-        public FavouriteController(youtubeappContect context)
+        public FavouriteController(youtubeappContext context)
         {
             _context = context;
+            // _context.Favourite.Load();
         }
 
         // GET: api/Favourite
+        // <summary>
+        // Get allfavourite list
+        // </summary>
         [HttpGet]
         public IEnumerable<Favourite> GetFavourite()
         {
@@ -28,15 +32,23 @@ namespace webapi.Controllers
         }
 
         // GET: api/Favourite/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetFavourite([FromRoute] int id)
+        // <summary>
+        // Get favourite list for selected user with mark
+        // </summary>
+        [HttpGet("{user_id}")]
+        public async Task<ActionResult> GetFavourite([FromRoute] int user_id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var favourite = await _context.Favourite.FindAsync(id);
+            var favourite = _context.Favourite.Where(o => o.UserId == user_id)
+                            .Join(_context.VoteforVideo, 
+                            favor => new {favor.VideoId, favor.UserId}, 
+                            vote => new {vote.VideoId, vote.UserId},
+                            (a, b) => new {a.UserId, a.VideoId, a.Link, a.Title, a.Thubmail, a.Description, a.Avg, mark = b.Mark})
+                            .ToArray();
 
             if (favourite == null)
             {
@@ -46,80 +58,80 @@ namespace webapi.Controllers
             return Ok(favourite);
         }
 
-        // PUT: api/Favourite/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFavourite([FromRoute] int id, [FromBody] Favourite favourite)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        // // PUT: api/Favourite/5
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> PutFavourite([FromRoute] int id, [FromBody] Favourite favourite)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return BadRequest(ModelState);
+        //     }
 
-            if (id != favourite.Id)
-            {
-                return BadRequest();
-            }
+        //     if (id != favourite.Id)
+        //     {
+        //         return BadRequest();
+        //     }
 
-            _context.Entry(favourite).State = EntityState.Modified;
+        //     _context.Entry(favourite).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FavouriteExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //     try
+        //     {
+        //         await _context.SaveChangesAsync();
+        //     }
+        //     catch (DbUpdateConcurrencyException)
+        //     {
+        //         if (!FavouriteExists(id))
+        //         {
+        //             return NotFound();
+        //         }
+        //         else
+        //         {
+        //             throw;
+        //         }
+        //     }
 
-            return NoContent();
-        }
+        //     return NoContent();
+        // }
 
-        // POST: api/Favourite
-        [HttpPost]
-        public async Task<IActionResult> PostFavourite([FromBody] Favourite favourite)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        // // POST: api/Favourite
+        // [HttpPost]
+        // public async Task<IActionResult> PostFavourite([FromBody] Favourite favourite)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return BadRequest(ModelState);
+        //     }
 
-            _context.Favourite.Add(favourite);
-            await _context.SaveChangesAsync();
+        //     _context.Favourite.Add(favourite);
+        //     await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFavourite", new { id = favourite.Id }, favourite);
-        }
+        //     return CreatedAtAction("GetFavourite", new { id = favourite.Id }, favourite);
+        // }
 
-        // DELETE: api/Favourite/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFavourite([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        // // DELETE: api/Favourite/5
+        // [HttpDelete("{id}")]
+        // public async Task<IActionResult> DeleteFavourite([FromRoute] int id)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return BadRequest(ModelState);
+        //     }
 
-            var favourite = await _context.Favourite.FindAsync(id);
-            if (favourite == null)
-            {
-                return NotFound();
-            }
+        //     var favourite = await _context.Favourite.FindAsync(id);
+        //     if (favourite == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            _context.Favourite.Remove(favourite);
-            await _context.SaveChangesAsync();
+        //     _context.Favourite.Remove(favourite);
+        //     await _context.SaveChangesAsync();
 
-            return Ok(favourite);
-        }
+        //     return Ok(favourite);
+        // }
 
         private bool FavouriteExists(int id)
         {
-            return _context.Favourite.Any(e => e.Id == id);
+            return _context.Favourite.Any(e => e.UserId == id);
         }
     }
 }

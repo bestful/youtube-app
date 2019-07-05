@@ -10,9 +10,10 @@ namespace webapi.Models
 
         public double Avg {get; set;}
 
-        // Copy from video model
+        // public int OwnerMark {get; set;}
 
-        public int Id { get; set; }
+        // Copy from video model
+        
         public string Title { get; set; }
         public string Link { get; set; }
         public string Thubmail { get; set; }

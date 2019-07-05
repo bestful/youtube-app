@@ -4,20 +4,27 @@ $radius: 10px;
   position: fixed;
   transform: translateX(-100%);
 
-  h2{
+  > .btn {
+    display: block;
     padding-left: 5px;
     text-align: center;
     border-radius: $radius 0 0 $radius;
+    
+    // text
+    // > & :after{
+    //   content: '  ';
+    // }
+    font-size: 1.27em;
     line-height: 2em;
   }
   .add{
-    background-color: greenyellow;
-    color: grey;
+    // background-color: #eee;
+    // color: grey;
   }
 
   .delete{
-    background-color: rgb(250, 84, 34);
-    color: white;
+    // background-color: #eee;
+    // color: white;
   }
 }
 
@@ -25,7 +32,7 @@ $delta-top: 1cm;
 .videos{
   padding-left: .5cm;
   padding-right: .5cm;
-  background-color: rgb(102, 102, 102);
+  background-color: rgba(109, 228, 202, 0.185);
 
   padding-top: $delta-top;
   padding-bottom: .01cm;
