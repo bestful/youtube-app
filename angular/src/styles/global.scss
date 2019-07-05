@@ -1,4 +1,9 @@
+@import "~ngx-smart-modal/ngx-smart-modal";
+@import '~bootstrap-material-design/dist/css/bootstrap-material-design.min.css';
 
+html {
+  overflow-y: scroll; 
+}
 
 body {
   padding-top: 3vh;
